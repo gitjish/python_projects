@@ -29,4 +29,27 @@ print(song_title)
 # print(h3_content)
 #70f3d3f947aa412b8781c3393105d504
 #aee222c628f6400e99b66db63c172f7f
-spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+#client_id=28faef88c6074afa9c046eeb09a4bd0b
+#client_secret=2648ee4483984721abe5fe9c19564d66
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="28faef88c6074afa9c046eeb09a4bd0b",
+                                               client_secret="2648ee4483984721abe5fe9c19564d66",
+
+                                               scope="playlist-modify-private",
+                                               show_dialog=True,
+                                               redirect_uri="https://example.com",
+                                               cache_path="token.txt")
+
+        
+        
+    )
+
+user_id = sp.current_user()["id"]
+
+
+results = sp.current_user_saved_tracks()
+for idx, item in enumerate(results['items']):
+    track = item['track']
+    print(idx, track['artists'][0]['name'], " – ", track['name'])
